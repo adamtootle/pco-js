@@ -1,4 +1,4 @@
-const Q = require('q');
+const Promise = require('bluebird');
 const http = require('./http');
 
 function Services() {
