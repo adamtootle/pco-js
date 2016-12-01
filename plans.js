@@ -14,8 +14,6 @@ function Plans() {
     return new Promise((resolve, reject) => {
       http.get(`https://api.planningcenteronline.com/services/v2/service_types/${schedule.relationships.service_type.data.id}/plans/${plan.id}/items?include=media,song`)
         .then((res) => {
-          console.log('res');
-          console.log(res);
           newPlan.items = res.data;
           resolve(newPlan);
         })
@@ -28,7 +26,7 @@ function Plans() {
   function getPlanAttachments(schedule, plan) {
     const newPlan = plan;
     return new Promise((resolve, reject) => {
-      http.get(`https://api.planningcenteronline.com/services/v2/service_types/${schedule.relationships.service_type.data.id}/plans/${plan.id}/attachments`)
+      http.get(`https://api.planningcenteronline.com/services/v2/service_types/${schedule.relationships.service_type.data.id}/plans/${plan.id}/all_attachments`)
         .then((res) => {
           newPlan.attachments = res.data;
           resolve(newPlan);
@@ -77,8 +75,8 @@ function Plans() {
     const promise = new Promise((resolve) => {
       getSchedules()
         .then((res) => Promise.all(res.data.map((schedule) => getFuturePlansForSchedule(schedule))))
-        .then((plans) => {
-          resolve(plans);
+        .then((schedules) => {
+          resolve(schedules);
         });
     });
     return promise;
