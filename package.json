@@ -18,8 +18,7 @@
   "homepage": "https://github.com/adamtootle/pco.js#readme",
   "dependencies": {
     "bluebird": "^3.4.1",
-    "lodash": "^4.17.2",
-    "request-promise": "^3.0.0",
+    "request-promise": "^4.1.1",
     "simple-oauth2": "^1.0.1"
   }
 }

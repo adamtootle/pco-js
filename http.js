@@ -1,16 +1,28 @@
-
 const request = require('request-promise');
 
 function HTTP() {
   this.accessToken = null;
   this.refreshToken = null;
+  this.apiRoot = 'https://api.planningcenteronline.com/services/v2';
 
-  this.configure = (config) => {
-    this.accessToken = config.accessToken;
-    this.refreshToken = config.refreshToken;
-  };
+  //
+  // private methods
+  //
 
-  this.get = (uri) => {
+  function formatApiRoute(apiRoot, route) {
+    if (route.indexOf(apiRoot) != -1) {
+      return route;
+    }
+
+    return apiRoot + route;
+  }
+
+  //
+  // public methods
+  //
+
+  this.get = (route) => {
+    const uri = formatApiRoute(this.apiRoot, route);
     var options = {
       uri,
       headers: {
@@ -19,19 +31,6 @@ function HTTP() {
       json: true,
     };
     return request(options);
-
-    // .catch((err) => {
-    //   if (err.statusCode === 401) {
-    //     auth.refreshToken()
-    //       .then(() => this.get(uri))
-    //       .then((res) => {
-    //         deferred.resolve(res);
-    //       })
-    //       .catch((err2) => {
-    //         deferred.reject(err2);
-    //       });
-    //   }
-    // });
   };
 }
 

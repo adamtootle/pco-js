@@ -1,18 +1,17 @@
-const Promise = require('bluebird');
-var EventEmitter = require('events').EventEmitter;
+const http = require('./http');
 
 function PCO(config) {
-  //
-  // private vars
-  //
 
-  var eventEmitter = new EventEmitter();
+  this.clientId = config.clientId;
+  this.clientSecret = config.clientSecret;
+  http.accessToken = config.accessToken;
+  http.refreshToken = config.refreshToken;
 
   //
   // private methods
   //
 
-  var refreshToken = () => {
+  var refreshAccessToken = () => {
     return request({
       uri: 'https://api.planningcenteronline.com/oauth/token',
       method: 'POST',
@@ -31,43 +30,15 @@ function PCO(config) {
   // public vars
   //
 
-  this.clientId = config.clientId;
-  this.clientSecret = config.clientSecret;
-  this.accessToken = config.accessToken;
-  this.redirectUri = config.redirectUri;
-
-  this.http = require('./http');
-  this.http.configure({
-    accessToken: config.accessToken,
-    refreshToken: config.refreshToken,
-  });
-
-  this.services = require('./services');
   this.plans = require('./plans');
+  this.schedules = require('./schedules');
 
   //
   // public methods
   //
 
-  this.on = (eventName, listener) => {
-    eventEmitter.on(eventName, listener);
-  };
+  this.reloadMe = (args) => http.get('/me');
 
-  this.removeListener = (eventName, listener) => {
-    eventEmitter.removeListener(eventName, listener);
-  };
-
-  this.reloadMe = () => {
-    return new Promise((resolve, reject) => {
-      this.http.get('https://api.planningcenteronline.com/services/v2/me')
-        .then((res) => {
-          resolve(res.data);
-        })
-        .catch((err) => {
-          reject(err);
-        });
-    });
-  };
 }
 
 module.exports = PCO;
