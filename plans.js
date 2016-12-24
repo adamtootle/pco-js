@@ -57,8 +57,41 @@ function Plans() {
   // public methods
   //
 
-  this.getPlan = (args) => http.get(`/service_types/${args.serviceTypeId}/plans/${args.planId}`);
-  this.getPlanAttachments = (item) => http.get(item.links.self);
+  this.getPlan = (args) => {
+    return new Promise((resolve, reject) => {
+      http.get(`/service_types/${args.serviceTypeId}/plans/${args.planId}`)
+          .then((plan) => {
+            resolve({
+              plan,
+            });
+          });
+    });
+  };
+  
+  this.getPlanItems = (args) => {
+    return new Promise((resolve, reject) => {
+      http.get(args.plan.data.links.items)
+          .then((planItems) => {
+            resolve({
+              plan: args.plan,
+              planItems,
+            });
+          });
+    });
+  };
+
+  this.getPlanAttachments = (args) => {
+    return new Promise((resolve, reject) => {
+      http.get(args.plan.data.links.all_attachments)
+          .then((planAttachments) => {
+            resolve({
+              plan: args.plan,
+              planItems: args.planItems,
+              planAttachments,
+            });
+          });
+    });
+  };
 
   this.getFuturePlans = () => {
     const promise = new Promise((resolve) => {

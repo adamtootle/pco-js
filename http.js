@@ -32,6 +32,19 @@ function HTTP() {
     };
     return request(options);
   };
+
+  this.post = (route) => {
+    const uri = formatApiRoute(this.apiRoot, route);
+    var options = {
+      uri,
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${this.accessToken}`,
+      },
+      json: true,
+    };
+    return request(options);
+  };
 }
 
 module.exports = new HTTP();

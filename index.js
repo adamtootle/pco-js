@@ -1,11 +1,5 @@
-const http = require('./http');
 
 function PCO(config) {
-
-  this.clientId = config.clientId;
-  this.clientSecret = config.clientSecret;
-  http.accessToken = config.accessToken;
-  http.refreshToken = config.refreshToken;
 
   //
   // private methods
@@ -30,14 +24,22 @@ function PCO(config) {
   // public vars
   //
 
+  this.clientId = config.clientId;
+  this.clientSecret = config.clientSecret;
+
+  this.http = require('./http');
+  this.http.accessToken = config.accessToken;
+  this.http.refreshToken = config.refreshToken;
+
   this.plans = require('./plans');
   this.schedules = require('./schedules');
+  this.attachments = require('./attachments');
 
   //
   // public methods
   //
 
-  this.reloadMe = (args) => http.get('/me');
+  this.reloadMe = (args) => this.http.get('/me');
 
 }
 
