@@ -48,9 +48,9 @@ function getFuturePlansForSchedule(schedule) {
 }
 
 class Plans {
-  getPlan = (args) => {
+  getPlan = (planId) => {
     return new Promise((resolve, reject) => {
-      http.get(`/service_types/${args.serviceTypeId}/plans/${args.planId}`)
+      http.get(`/plans/${planId}`)
           .then((plan) => {
             resolve({
               plan,

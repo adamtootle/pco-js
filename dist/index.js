@@ -20,6 +20,10 @@ var _attachments = require('./attachments');
 
 var _attachments2 = _interopRequireDefault(_attachments);
 
+var _songs = require('./songs');
+
+var _songs2 = _interopRequireDefault(_songs);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -43,6 +47,7 @@ var PCO = function PCO(config) {
   this.plans = _plans2.default;
   this.schedules = _schedules2.default;
   this.attachments = _attachments2.default;
+  this.songs = _songs2.default;
 };
 
 exports.default = PCO;

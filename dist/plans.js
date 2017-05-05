@@ -64,9 +64,9 @@ function getFuturePlansForSchedule(schedule) {
 var Plans = function Plans() {
   _classCallCheck(this, Plans);
 
-  this.getPlan = function (args) {
+  this.getPlan = function (planId) {
     return new _bluebird2.default(function (resolve, reject) {
-      _http2.default.get('/service_types/' + args.serviceTypeId + '/plans/' + args.planId).then(function (plan) {
+      _http2.default.get('/plans/' + planId).then(function (plan) {
         resolve({
           plan: plan
         });
