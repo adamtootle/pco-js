@@ -4,9 +4,19 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 var _bluebird = require('bluebird');
 
 var _bluebird2 = _interopRequireDefault(_bluebird);
+
+var _forEach = require('lodash/forEach');
+
+var _forEach2 = _interopRequireDefault(_forEach);
+
+var _flatten = require('lodash/flatten');
+
+var _flatten2 = _interopRequireDefault(_flatten);
 
 var _http = require('./http');
 
@@ -64,11 +74,12 @@ function getFuturePlansForSchedule(schedule) {
 var Plans = function Plans() {
   _classCallCheck(this, Plans);
 
-  this.getPlan = function (planId) {
+  this.getPlan = function (planId, userId) {
     return new _bluebird2.default(function (resolve, reject) {
-      _http2.default.get('/plans/' + planId).then(function (plan) {
+      _http2.default.get('/plans/' + planId + '?include=series').then(function (plan) {
         resolve({
-          plan: plan
+          plan: plan.data,
+          userId: userId
         });
       });
     });
@@ -76,23 +87,20 @@ var Plans = function Plans() {
 
   this.getPlanItems = function (args) {
     return new _bluebird2.default(function (resolve, reject) {
-      _http2.default.get(args.plan.data.links.items).then(function (planItems) {
-        resolve({
-          plan: args.plan,
-          planItems: planItems
-        });
+      _http2.default.get(args.plan.links.items + '?include=media').then(function (planItems) {
+        resolve(_extends({}, args, {
+          planItems: planItems.data
+        }));
       });
     });
   };
 
   this.getPlanAttachments = function (args) {
     return new _bluebird2.default(function (resolve) {
-      _http2.default.get(args.plan.data.links.all_attachments).then(function (planAttachments) {
-        resolve({
-          plan: args.plan,
-          planItems: args.planItems,
-          planAttachments: planAttachments
-        });
+      _http2.default.get(args.plan.links.all_attachments).then(function (attachmentsRes) {
+        resolve(_extends({}, args, {
+          planAttachments: attachmentsRes.data
+        }));
       });
     });
   };
@@ -108,6 +116,34 @@ var Plans = function Plans() {
       });
     });
     return promise;
+  };
+
+  this.getSkipFilter = function (args) {
+    return new _bluebird2.default(function (resolve, reject) {
+      _http2.default.post('/people/' + args.userId + '/skip_filter', {
+        data: {
+          type: 'skip',
+          attributes: {},
+          relationships: {
+            attachment: {
+              data: args.planAttachments.map(function (attachment) {
+                return { type: 'Attachment', id: attachment.id };
+              })
+            },
+            plan: {
+              data: [{
+                type: 'Plan',
+                id: args.plan.id
+              }]
+            }
+          }
+        }
+      }).then(function (skippedAttachmentsRes) {
+        resolve(_extends({}, args, {
+          skippedAttachments: skippedAttachmentsRes.data
+        }));
+      });
+    });
   };
 };
 

@@ -1,4 +1,6 @@
 import Promise from 'bluebird';
+import forEach from 'lodash/forEach';
+import flatten from 'lodash/flatten';
 import http from './http';
 import Schedules from './schedules';
 
@@ -48,12 +50,13 @@ function getFuturePlansForSchedule(schedule) {
 }
 
 class Plans {
-  getPlan = (planId) => {
+  getPlan = (planId, userId) => {
     return new Promise((resolve, reject) => {
-      http.get(`/plans/${planId}`)
+      http.get(`/plans/${planId}?include=series`)
           .then((plan) => {
             resolve({
-              plan,
+              plan: plan.data,
+              userId,
             });
           });
     });
@@ -61,11 +64,11 @@ class Plans {
 
   getPlanItems = (args) => {
     return new Promise((resolve, reject) => {
-      http.get(args.plan.data.links.items)
+      http.get(`${args.plan.links.items}?include=media`)
           .then((planItems) => {
             resolve({
-              plan: args.plan,
-              planItems,
+              ...args,
+              planItems: planItems.data,
             });
           });
     });
@@ -73,14 +76,29 @@ class Plans {
 
   getPlanAttachments = (args) => {
     return new Promise((resolve) => {
-      http.get(args.plan.data.links.all_attachments)
-          .then((planAttachments) => {
-            resolve({
-              plan: args.plan,
-              planItems: args.planItems,
-              planAttachments,
-            });
+      http.get(args.plan.links.all_attachments)
+        .then((attachmentsRes) => {
+          // const planAttachments = flatten(attachmentsRes.data.map((singleAttachmentsResponse) => {
+          //   return singleAttachmentsResponse.data.map((attachment) => {
+          //     return {
+          //       ...attachment,
+          //       relationships: {
+          //         ...attachment.relationships,
+          //         song: {
+          //           ...attachment.relationships.song,
+          //           data: {
+          //             id: singleAttachmentsResponse.meta.parent.id,
+          //           },
+          //         },
+          //       },
+          //     };
+          //   });
+          // }));
+          resolve({
+            ...args,
+            planAttachments: attachmentsRes.data,
           });
+        });
     });
   };
 
@@ -93,6 +111,34 @@ class Plans {
         });
     });
     return promise;
+  };
+
+  getSkipFilter = (args) => {
+    return new Promise((resolve, reject) => {
+      http.post(`/people/${args.userId}/skip_filter`, {
+        data: {
+          type: 'skip',
+          attributes: {},
+          relationships: {
+            attachment: {
+              data: args.planAttachments.map(attachment => ({ type: 'Attachment', id: attachment.id })),
+            },
+            plan: {
+              data: [{
+                type: 'Plan',
+                id: args.plan.id,
+              }],
+            },
+          },
+        },
+      })
+        .then((skippedAttachmentsRes) => {
+          resolve({
+            ...args,
+            skippedAttachments: skippedAttachmentsRes.data,
+          });
+        });
+    });
   };
 }
 

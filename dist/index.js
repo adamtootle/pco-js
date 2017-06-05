@@ -20,9 +20,9 @@ var _attachments = require('./attachments');
 
 var _attachments2 = _interopRequireDefault(_attachments);
 
-var _songs = require('./songs');
+var _events = require('./events');
 
-var _songs2 = _interopRequireDefault(_songs);
+var _events2 = _interopRequireDefault(_events);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -37,6 +37,10 @@ var PCO = function PCO(config) {
     return _this.http.get('/me');
   };
 
+  this.on = function (eventName, listener) {
+    _events2.default.on(eventName, listener);
+  };
+
   this.clientId = config.clientId;
   this.clientSecret = config.clientSecret;
 
@@ -47,7 +51,6 @@ var PCO = function PCO(config) {
   this.plans = _plans2.default;
   this.schedules = _schedules2.default;
   this.attachments = _attachments2.default;
-  this.songs = _songs2.default;
 };
 
 exports.default = PCO;

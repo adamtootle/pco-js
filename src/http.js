@@ -1,5 +1,6 @@
-// const request = require('request-promise');
+import Promise from 'bluebird';
 import request from 'request-promise';
+import events from './events';
 
 function formatApiRoute(apiRoot, route) {
   if (route.indexOf(apiRoot) !== -1) {
@@ -7,6 +8,22 @@ function formatApiRoute(apiRoot, route) {
   }
 
   return apiRoot + route;
+}
+
+function loadRoute(options, accessToken) {
+  console.log('loadRoute', options);
+  return new Promise((resolve, reject) => {
+    if (accessToken) {
+      request(options)
+        .then(resolve)
+        .catch((err) => {
+          events.emit('error', err);
+          reject(err);
+        });
+    } else {
+      reject();
+    }
+  });
 }
 
 class HTTP {
@@ -25,10 +42,10 @@ class HTTP {
       },
       json: true,
     };
-    return request(options);
+    return loadRoute(options, this.accessToken);
   }
 
-  post(route) {
+  post(route, data) {
     const uri = formatApiRoute(this.apiRoot, route);
     const options = {
       uri,
@@ -37,8 +54,9 @@ class HTTP {
         Authorization: `Bearer ${this.accessToken}`,
       },
       json: true,
+      body: data,
     };
-    return request(options);
+    return loadRoute(options, this.accessToken);
   }
 }
 

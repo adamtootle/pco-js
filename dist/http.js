@@ -6,9 +6,17 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+var _bluebird = require('bluebird');
+
+var _bluebird2 = _interopRequireDefault(_bluebird);
+
 var _requestPromise = require('request-promise');
 
 var _requestPromise2 = _interopRequireDefault(_requestPromise);
+
+var _events = require('./events');
+
+var _events2 = _interopRequireDefault(_events);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -20,6 +28,20 @@ function formatApiRoute(apiRoot, route) {
   }
 
   return apiRoot + route;
+}
+
+function loadRoute(options, accessToken) {
+  console.log('loadRoute', options);
+  return new _bluebird2.default(function (resolve, reject) {
+    if (accessToken) {
+      (0, _requestPromise2.default)(options).then(resolve).catch(function (err) {
+        _events2.default.emit('error', err);
+        reject(err);
+      });
+    } else {
+      reject();
+    }
+  });
 }
 
 var HTTP = function () {
@@ -42,11 +64,11 @@ var HTTP = function () {
         },
         json: true
       };
-      return (0, _requestPromise2.default)(options);
+      return loadRoute(options, this.accessToken);
     }
   }, {
     key: 'post',
-    value: function post(route) {
+    value: function post(route, data) {
       var uri = formatApiRoute(this.apiRoot, route);
       var options = {
         uri: uri,
@@ -54,9 +76,10 @@ var HTTP = function () {
         headers: {
           Authorization: 'Bearer ' + this.accessToken
         },
-        json: true
+        json: true,
+        body: data
       };
-      return (0, _requestPromise2.default)(options);
+      return loadRoute(options, this.accessToken);
     }
   }]);
 

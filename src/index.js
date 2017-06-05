@@ -2,7 +2,7 @@ import http from './http';
 import plans from './plans';
 import schedules from './schedules';
 import attachments from './attachments';
-import songs from './songs';
+import events from './events';
 
 class PCO {
   constructor(config) {
@@ -16,10 +16,13 @@ class PCO {
     this.plans = plans;
     this.schedules = schedules;
     this.attachments = attachments;
-    this.songs = songs;
   }
 
   reloadMe = () => this.http.get('/me');
+
+  on = (eventName, listener) => {
+    events.on(eventName, listener);
+  };
 }
 
 export default PCO;
