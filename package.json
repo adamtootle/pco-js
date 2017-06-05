@@ -10,12 +10,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/adamtootle/pco.js.git"
+    "url": "git+https://github.com/adamtootle/pco-js.git"
   },
   "author": "Adam Tootle",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/adamtootle/pco.js/issues"
+    "url": "https://github.com/adamtootle/pco-js/issues"
   },
   "homepage": "https://github.com/adamtootle/pco.js#readme",
   "dependencies": {
