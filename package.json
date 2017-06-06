@@ -17,7 +17,7 @@
   "bugs": {
     "url": "https://github.com/adamtootle/pco-js/issues"
   },
-  "homepage": "https://github.com/adamtootle/pco.js#readme",
+  "homepage": "https://github.com/adamtootle/pco-js#readme",
   "dependencies": {
     "bluebird": "^3.4.1",
     "events": "^1.1.1",
