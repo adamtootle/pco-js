@@ -31,7 +31,6 @@ function formatApiRoute(apiRoot, route) {
 }
 
 function loadRoute(options, accessToken) {
-  console.log('loadRoute', options);
   return new _bluebird2.default(function (resolve, reject) {
     if (accessToken) {
       (0, _requestPromise2.default)(options).then(resolve).catch(function (err) {

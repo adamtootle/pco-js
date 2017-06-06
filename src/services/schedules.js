@@ -1,4 +1,4 @@
-import http from './http';
+import http from '../http';
 
 class Schedules {
   getSchedules = () => http.get('/me/schedules');

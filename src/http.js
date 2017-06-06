@@ -11,7 +11,7 @@ function formatApiRoute(apiRoot, route) {
 }
 
 function loadRoute(options, accessToken) {
-  console.log('loadRoute', options);
+  // console.log('loadRoute', options);
   return new Promise((resolve, reject) => {
     if (accessToken) {
       request(options)

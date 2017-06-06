@@ -1,8 +1,6 @@
 import http from './http';
-import plans from './plans';
-import schedules from './schedules';
-import attachments from './attachments';
 import events from './events';
+import services from './services';
 
 class PCO {
   constructor(config) {
@@ -13,9 +11,7 @@ class PCO {
     this.http.accessToken = config.accessToken;
     this.http.refreshToken = config.refreshToken;
 
-    this.plans = plans;
-    this.schedules = schedules;
-    this.attachments = attachments;
+    this.services = services;
   }
 
   reloadMe = () => this.http.get('/me');

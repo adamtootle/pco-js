@@ -1,7 +1,7 @@
 import Promise from 'bluebird';
 import forEach from 'lodash/forEach';
 import flatten from 'lodash/flatten';
-import http from './http';
+import http from '../http';
 import Schedules from './schedules';
 
 function getPlanItems(schedule, plan) {
@@ -32,52 +32,30 @@ function getPlanAttachments(schedule, plan) {
   });
 }
 
-function getFuturePlansForSchedule(schedule) {
-  return new Promise((resolve, reject) => {
-    http.get(`/service_types/${schedule.relationships.service_type.data.id}/plans?filter=future`)
-          .then((res) => Promise.all(res.data.map((plan) => getPlanItems(schedule, plan)
-                                .then(getPlanAttachments(schedule, plan)))))
-          .then((plans) => {
-            resolve({
-              schedule,
-              plans,
-            });
-          })
-          .catch((err) => {
-            reject(err);
-          });
-  });
-}
-
 class Plans {
-  getPlan = (planId, userId) => {
-    return new Promise((resolve, reject) => {
+  get = (planId) => (
+    new Promise((resolve) => {
       http.get(`/plans/${planId}?include=series`)
           .then((plan) => {
-            resolve({
-              plan: plan.data,
-              userId,
-            });
+            resolve(plan.data);
           });
-    });
-  };
+    })
+  );
 
-  getPlanItems = (args) => {
-    return new Promise((resolve, reject) => {
-      http.get(`${args.plan.links.items}?include=media`)
-          .then((planItems) => {
-            resolve({
-              ...args,
-              planItems: planItems.data,
-            });
-          });
-    });
-  };
-
-  getPlanAttachments = (args) => {
+  getItems = (plan) => {
+    console.log('plan', plan);
     return new Promise((resolve) => {
-      http.get(args.plan.links.all_attachments)
-        .then((attachmentsRes) => {
+      http.get(`${plan.links.items}?include=media`)
+          .then((planItems) => {
+            resolve(planItems.data);
+          });
+    });
+  };
+
+  getAttachments = (plan) => {
+    return new Promise((resolve) => {
+      http.get(plan.links.all_attachments)
+        .then((attachments) => {
           // const planAttachments = flatten(attachmentsRes.data.map((singleAttachmentsResponse) => {
           //   return singleAttachmentsResponse.data.map((attachment) => {
           //     return {
@@ -94,34 +72,20 @@ class Plans {
           //     };
           //   });
           // }));
-          resolve({
-            ...args,
-            planAttachments: attachmentsRes.data,
-          });
+          resolve(attachments.data);
         });
     });
-  };
-
-  getFuturePlans = () => {
-    const promise = new Promise((resolve) => {
-      Schedules.getSchedules()
-        .then(res => Promise.all(res.data.map(schedule => getFuturePlansForSchedule(schedule))))
-        .then((schedules) => {
-          resolve(schedules);
-        });
-    });
-    return promise;
   };
 
   getSkipFilter = (args) => {
-    return new Promise((resolve, reject) => {
-      http.post(`/people/${args.userId}/skip_filter`, {
+    return new Promise((resolve) => {
+      http.post(`/people/${args.user.id}/skip_filter`, {
         data: {
           type: 'skip',
           attributes: {},
           relationships: {
             attachment: {
-              data: args.planAttachments.map(attachment => ({ type: 'Attachment', id: attachment.id })),
+              data: args.attachments.map(attachment => ({ type: 'Attachment', id: attachment.id })),
             },
             plan: {
               data: [{
@@ -132,11 +96,8 @@ class Plans {
           },
         },
       })
-        .then((skippedAttachmentsRes) => {
-          resolve({
-            ...args,
-            skippedAttachments: skippedAttachmentsRes.data,
-          });
+        .then((skippedAttachments) => {
+          resolve(skippedAttachments.data);
         });
     });
   };

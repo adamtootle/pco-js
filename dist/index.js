@@ -8,21 +8,13 @@ var _http = require('./http');
 
 var _http2 = _interopRequireDefault(_http);
 
-var _plans = require('./plans');
-
-var _plans2 = _interopRequireDefault(_plans);
-
-var _schedules = require('./schedules');
-
-var _schedules2 = _interopRequireDefault(_schedules);
-
-var _attachments = require('./attachments');
-
-var _attachments2 = _interopRequireDefault(_attachments);
-
 var _events = require('./events');
 
 var _events2 = _interopRequireDefault(_events);
+
+var _services = require('./services');
+
+var _services2 = _interopRequireDefault(_services);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -48,9 +40,7 @@ var PCO = function PCO(config) {
   this.http.accessToken = config.accessToken;
   this.http.refreshToken = config.refreshToken;
 
-  this.plans = _plans2.default;
-  this.schedules = _schedules2.default;
-  this.attachments = _attachments2.default;
+  this.services = _services2.default;
 };
 
 exports.default = PCO;
