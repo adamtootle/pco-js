@@ -1,0 +1,1 @@
+JS library for working the with [Planning Center API](https://planningcenter.github.io/api-docs/). Not remotely close to production ready. Only supports a handful of [Services](https://planningcenter.github.io/api-docs/#pco-services) routes right now that were needed for [Servizi](https://github.com/adamtootle/servizi).
