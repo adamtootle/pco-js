@@ -12,7 +12,6 @@ class Plans {
   );
 
   getItems = (plan) => {
-    console.log('plan', plan);
     return new Promise((resolve) => {
       http.get(`${plan.links.items}?include=media`)
           .then((planItems) => {

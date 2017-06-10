@@ -28,7 +28,6 @@ var Plans = function Plans() {
   };
 
   this.getItems = function (plan) {
-    console.log('plan', plan);
     return new _bluebird2.default(function (resolve) {
       _http2.default.get(plan.links.items + '?include=media').then(function (planItems) {
         resolve(planItems.data);
