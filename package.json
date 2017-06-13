@@ -1,6 +1,6 @@
 {
   "name": "pco-js",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "JS API client for Planning Center",
   "main": "dist/index.js",
   "scripts": {
