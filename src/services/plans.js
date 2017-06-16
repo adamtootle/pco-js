@@ -22,7 +22,7 @@ class Plans {
 
   getAttachments = (plan) => {
     return new Promise((resolve) => {
-      http.get(plan.links.all_attachments)
+      http.get(`${plan.links.all_attachments}?per_page=100`)
         .then((attachments) => {
           resolve(attachments.data);
         });

@@ -37,7 +37,7 @@ var Plans = function Plans() {
 
   this.getAttachments = function (plan) {
     return new _bluebird2.default(function (resolve) {
-      _http2.default.get(plan.links.all_attachments).then(function (attachments) {
+      _http2.default.get(plan.links.all_attachments + '?per_page=100').then(function (attachments) {
         resolve(attachments.data);
       });
     });
