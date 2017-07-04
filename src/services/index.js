@@ -1,22 +1,119 @@
-import PCORequest from '../PCORequest';
-import plans from './plans';
-import organizations from './organizations';
 
+import PCORequest from '../PCORequest';
+
+import me from '../me';
 import annotationDrawings from './annotationDrawings';
+import arrangements from './arrangements';
 import attachments from './attachments';
+import attachmentActivities from './attachmentActivities';
+import attachmentAnnotations from './attachmentAnnotations';
+import attachmentTypes from './attachmentTypes';
+import availableSignups from './availableSignups';
+import backgroundChecks from './backgroundChecks';
+import blockouts from './blockouts';
+import blockoutDates from './blockoutDates';
+import blockoutExceptions from './blockoutExceptions';
+import checkIns from './checkIns';
+import contributors from './contributors';
+import emailTemplates from './emailTemplates';
+import emailTemplateRenderedResponses from './emailTemplateRenderedResponses';
+import extendedTeams from './extendedTeams';
+import folders from './folders';
+import items from './items';
+import itemNotes from './itemNotes';
+import itemNoteCategories from './itemNoteCategories';
+import itemTimes from './itemTimes';
+import keys from './keys';
+import layouts from './layouts';
+import medias from './medias';
+import mediaSchedules from './mediaSchedules';
+import neededPositions from './neededPositions';
+import organizations from './organizations';
+import people from './people';
+import personTeamPositionAssignments from './personTeamPositionAssignments';
+import plans from './plans';
+import planNotes from './planNotes';
+import planNoteCategories from './planNoteCategories';
+import planPeople from './planPeople';
+import planPersonTimes from './planPersonTimes';
+import planTemplates from './planTemplates';
+import planTimes from './planTimes';
 import schedules from './schedules';
-import me from './me';
+import scheduledPeople from './scheduledPeople';
+import series from './series';
+import serviceTypes from './serviceTypes';
+import signupSheets from './signupSheets';
+import signupSheetMetadata from './signupSheetMetadata';
+import skippedAttachments from './skippedAttachments';
+import songs from './songs';
+import songSchedules from './songSchedules';
+import splitTeamRehearsalAssignments from './splitTeamRehearsalAssignments';
+import tags from './tags';
+import tagGroups from './tagGroups';
+import teams from './teams';
+import teamLeaders from './teamLeaders';
+import teamPositions from './teamPositions';
+import textSettings from './textSettings';
+import timePreferenceOptions from './timePreferenceOptions';
 
 export default class Services extends PCORequest {
-  annotationDrawings = annotationDrawings;
-  attachments = attachments;
-  schedules = schedules;
-  me = me;
-}
+  constructor() {
+    super();
+    this.uri = '/services/v2';
+  }
 
-// module.exports = {
-//   schedules,
-//   plans,
-//   attachments,
-//   organizations,
-// };
+  me = me;
+  annotationDrawings = annotationDrawings;
+  arrangements = arrangements;
+  attachments = attachments;
+  attachmentActivities = attachmentActivities;
+  attachmentAnnotations = attachmentAnnotations;
+  attachmentTypes = attachmentTypes;
+  availableSignups = availableSignups;
+  backgroundChecks = backgroundChecks;
+  blockouts = blockouts;
+  blockoutDates = blockoutDates;
+  blockoutExceptions = blockoutExceptions;
+  checkIns = checkIns;
+  contributors = contributors;
+  emailTemplates = emailTemplates;
+  emailTemplateRenderedResponses = emailTemplateRenderedResponses;
+  extendedTeams = extendedTeams;
+  folders = folders;
+  items = items;
+  itemNotes = itemNotes;
+  itemNoteCategories = itemNoteCategories;
+  itemTimes = itemTimes;
+  keys = keys;
+  layouts = layouts;
+  medias = medias;
+  mediaSchedules = mediaSchedules;
+  neededPositions = neededPositions;
+  organizations = organizations;
+  people = people;
+  personTeamPositionAssignments = personTeamPositionAssignments;
+  plans = plans;
+  planNotes = planNotes;
+  planNoteCategories = planNoteCategories;
+  planPeople = planPeople;
+  planPersonTimes = planPersonTimes;
+  planTemplates = planTemplates;
+  planTimes = planTimes;
+  schedules = schedules;
+  scheduledPeople = scheduledPeople;
+  series = series;
+  serviceTypes = serviceTypes;
+  signupSheets = signupSheets;
+  signupSheetMetadata = signupSheetMetadata;
+  skippedAttachments = skippedAttachments;
+  songs = songs;
+  songSchedules = songSchedules;
+  splitTeamRehearsalAssignments = splitTeamRehearsalAssignments;
+  tags = tags;
+  tagGroups = tagGroups;
+  teams = teams;
+  teamLeaders = teamLeaders;
+  teamPositions = teamPositions;
+  textSettings = textSettings;
+  timePreferenceOptions = timePreferenceOptions;
+}

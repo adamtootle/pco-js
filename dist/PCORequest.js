@@ -16,7 +16,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var PCORequest = function PCORequest() {
+var PCORequest = function PCORequest(args) {
   var _this = this;
 
   _classCallCheck(this, PCORequest);
@@ -25,7 +25,7 @@ var PCORequest = function PCORequest() {
     return _http2.default.get(_this.uri, _this.params);
   };
 
-  this.uri = '/services/v2';
+  this.uri = '';
   this.params = {};
 };
 

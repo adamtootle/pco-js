@@ -3,12 +3,10 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-
-exports.default = function (attachmentAnnotationId) {
-  this.uri = this.uri + "/attachment_annotations";
-  this.uri = attachmentAnnotationId ? this.uri + "/" + attachmentAnnotationId : this.uri;
+exports.default = attachmentActivities;
+function attachmentActivities() {
+  this.uri = this.uri + "/attachment_activities";
 
   return this;
-};
-
+}
 module.exports = exports["default"];

@@ -1,0 +1,95 @@
+
+import PCORequest from '../PCORequest';
+
+import me from '../me';
+import addresses from './addresses';
+import apps from './apps';
+import campuses from './campuses';
+import carriers from './carriers';
+import conditions from './conditions';
+import conditionResults from './conditionResults';
+import connectedPeople from './connectedPeople';
+import emails from './emails';
+import fieldData from './fieldData';
+import fieldDefinitions from './fieldDefinitions';
+import fieldOptions from './fieldOptions';
+import households from './households';
+import householdMemberships from './householdMemberships';
+import inactiveReasons from './inactiveReasons';
+import lists from './lists';
+import listShares from './listShares';
+import maritalStatuses from './maritalStatuses';
+import messages from './messages';
+import messageGroups from './messageGroups';
+import namePrefixes from './namePrefixes';
+import nameSuffixes from './nameSuffixes';
+import organizations from './organizations';
+import organizationStatistics from './organizationStatistics';
+import peopleImports from './peopleImports';
+import peopleImportConflicts from './peopleImportConflicts';
+import peopleImportHistories from './peopleImportHistories';
+import people from './people';
+import personApps from './personApps';
+import personMergers from './personMergers';
+import phoneNumbers from './phoneNumbers';
+import reports from './reports';
+import rules from './rules';
+import ruleResults from './ruleResults';
+import schoolOptions from './schoolOptions';
+import socialProfiles from './socialProfiles';
+import tabs from './tabs';
+import workflows from './workflows';
+import workflowCards from './workflowCards';
+import workflowCardActivities from './workflowCardActivities';
+import workflowCardNotes from './workflowCardNotes';
+import workflowSteps from './workflowSteps';
+
+export default class Services extends PCORequest {
+  constructor() {
+    super();
+    this.uri = '/people/v2';
+  }
+
+  me = me;
+  addresses = addresses;
+  apps = apps;
+  campuses = campuses;
+  carriers = carriers;
+  conditions = conditions;
+  conditionResults = conditionResults;
+  connectedPeople = connectedPeople;
+  emails = emails;
+  fieldData = fieldData;
+  fieldDefinitions = fieldDefinitions;
+  fieldOptions = fieldOptions;
+  households = households;
+  householdMemberships = householdMemberships;
+  inactiveReasons = inactiveReasons;
+  lists = lists;
+  listShares = listShares;
+  maritalStatuses = maritalStatuses;
+  messages = messages;
+  messageGroups = messageGroups;
+  namePrefixes = namePrefixes;
+  nameSuffixes = nameSuffixes;
+  organizations = organizations;
+  organizationStatistics = organizationStatistics;
+  peopleImports = peopleImports;
+  peopleImportConflicts = peopleImportConflicts;
+  peopleImportHistories = peopleImportHistories;
+  people = people;
+  personApps = personApps;
+  personMergers = personMergers;
+  phoneNumbers = phoneNumbers;
+  reports = reports;
+  rules = rules;
+  ruleResults = ruleResults;
+  schoolOptions = schoolOptions;
+  socialProfiles = socialProfiles;
+  tabs = tabs;
+  workflows = workflows;
+  workflowCards = workflowCards;
+  workflowCardActivities = workflowCardActivities;
+  workflowCardNotes = workflowCardNotes;
+  workflowSteps = workflowSteps;
+}

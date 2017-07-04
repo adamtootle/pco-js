@@ -2,8 +2,8 @@ import Promise from 'bluebird';
 import http from './http';
 
 export default class PCORequest {
-  constructor() {
-    this.uri = '/services/v2';
+  constructor(args) {
+    this.uri = '';
     this.params = {};
   }
 

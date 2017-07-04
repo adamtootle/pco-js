@@ -1,5 +1,8 @@
 import http from './http';
 import events from './events';
+import CheckIns from './checkIns';
+import Giving from './giving';
+import People from './people';
 import Services from './services';
 
 class PCO {
@@ -14,9 +17,10 @@ class PCO {
     // this.services = services;
   }
 
-  services() {
-    return new Services();
-  }
+  checkIns = () => new CheckIns();
+  giving = () => new Giving();
+  people = () => new People();
+  services = () => new Services();
 
   reloadMe = () => this.http.get('/me');
 
