@@ -30,7 +30,7 @@ class HTTP {
   constructor() {
     this.accessToken = null;
     this.refreshToken = null;
-    this.apiRoot = 'https://api.planningcenteronline.com/services/v2';
+    this.apiRoot = 'https://api.planningcenteronline.com';
   }
 
   get(route) {
@@ -38,10 +38,11 @@ class HTTP {
     const options = {
       uri,
       headers: {
-        Authorization: `Bearer ${this.accessToken}`,
+        Authorization: this.accessToken ? `Bearer ${this.accessToken}` : null,
       },
       json: true,
     };
+    console.log(options);
     return loadRoute(options, this.accessToken);
   }
 

@@ -1,24 +1,14 @@
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _http = require('../http');
+exports.default = function (id) {
+  this.uri = this.uri + "/schedules";
+  this.uri = id ? this.uri + "/" + id : this.uri;
 
-var _http2 = _interopRequireDefault(_http);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var Schedules = function Schedules() {
-  _classCallCheck(this, Schedules);
-
-  this.getSchedules = function () {
-    return _http2.default.get('/me/schedules');
-  };
+  return this;
 };
 
-exports.default = new Schedules();
-module.exports = exports['default'];
+module.exports = exports["default"];

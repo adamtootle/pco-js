@@ -4,9 +4,8 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-exports.default = function (id) {
-  this.uri = this.uri + "/attachments";
-  this.uri = id ? this.uri + "/" + id : this.uri;
+exports.default = function () {
+  this.uri = this.uri + "/me";
 
   return this;
 };

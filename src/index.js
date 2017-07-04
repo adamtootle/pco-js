@@ -1,6 +1,6 @@
 import http from './http';
 import events from './events';
-import services from './services';
+import Services from './services';
 
 class PCO {
   constructor(config) {
@@ -11,7 +11,11 @@ class PCO {
     this.http.accessToken = config.accessToken;
     this.http.refreshToken = config.refreshToken;
 
-    this.services = services;
+    // this.services = services;
+  }
+
+  services() {
+    return new Services();
   }
 
   reloadMe = () => this.http.get('/me');
